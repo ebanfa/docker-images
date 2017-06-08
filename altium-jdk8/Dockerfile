@@ -4,6 +4,10 @@ MAINTAINER Edward Banfa "ebanfa@gmail.com"
 
 USER root
 
+RUN apk update && \
+    apk add sudo && \
+    rm -rf /var/cache/apk/*
+
 RUN \
   apk update && \
   apk upgrade && \  
@@ -35,4 +39,11 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
   tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
   rm apache-maven-$MAVEN_VERSION-bin.tar.gz && \
   mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
+
+RUN addgroup altium 
+RUN adduser -s /bin/bash -D -G altium altium
+
+USER altium
+
+CMD ["bash"]
 
