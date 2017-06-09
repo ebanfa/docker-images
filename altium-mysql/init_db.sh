@@ -6,7 +6,7 @@ MYSQL_USER=${MYSQL_USER:-"altium"}
 MYSQL_USER_PWD=${MYSQL_USER_PWD:-"netfilter"}
 MYSQL_USER_DB=${MYSQL_USER_DB:-"altium"}
 MYSQL_DDL_FILE=${MYSQL_DDL_FILE:-"ddl.sql"}
-MYSQL_SEED_FILE=${MYSQL_DDL_FILE:-"seed-data.sql"}
+MYSQL_SEED_FILE=${MYSQL_SEED_FILE:-"seed-data.sql"}
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
