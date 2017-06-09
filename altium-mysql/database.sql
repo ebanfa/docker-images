@@ -1,3 +1,5 @@
+USE altium;
+
 DROP TABLE IF EXISTS pricingoptions;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS account;

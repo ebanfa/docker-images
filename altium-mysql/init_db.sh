@@ -70,8 +70,9 @@ EOF
 
 	# run sql DDL file
 	echo "[i] running sql DDL "
-	wget https://github.com/ebanfa/docker-images/blob/master/altium-mysql/database.sql
-	/usr/bin/mysql -u $MYSQL_USER -p$MYSQL_USER_PWD MYSQL_USER_DB < database.sql
+	wget https://raw.githubusercontent.com/ebanfa/docker-images/master/altium-mysql/database.sql
+	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < database.sql
+	#/usr/bin/mysql -u $MYSQL_USER -p$MYSQL_USER_PWD MYSQL_USER_DB < database.sql
 fi
 
 echo "[i] Sleeping 5 sec"
