@@ -5,6 +5,7 @@ MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD:-"mysql"}
 MYSQL_USER=${MYSQL_USER:-"altium"}
 MYSQL_USER_PWD=${MYSQL_USER_PWD:-"netfilter"}
 MYSQL_USER_DB=${MYSQL_USER_DB:-"altium"}
+MYSQL_DDL_FILE=${MYSQL_DDL_FILE:-"/scripts"}
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
@@ -68,7 +69,8 @@ EOF
 	rm -f $tfile
 
 	# run sql DDL file
-	echo "[i] run tempfile: $tfile"
+	echo "[i] running sql DDL "
+	wget https://github.com/ebanfa/docker-images/blob/master/altium-mysql/database.sql
 	/usr/bin/mysql -u $MYSQL_USER -p$MYSQL_USER_PWD MYSQL_USER_DB < database.sql
 fi
 
