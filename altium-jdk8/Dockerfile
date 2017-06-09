@@ -1,24 +1,10 @@
-FROM alpine:latest
+FROM altium-base:latest
 
 MAINTAINER Edward Banfa "ebanfa@gmail.com"
 
 USER root
 
-RUN apk update && \
-    apk add sudo && \
-    rm -rf /var/cache/apk/*
-
-RUN \
-  apk update && \
-  apk upgrade && \  
-  apk add bash && \
-  apk add openssh && \
-  apk add openssl && \
-  apk add ca-certificates && \
-  apk add wget && \
-  apk add git && \
-  apk add openjdk8 && \
-  rm -rf /var/cache/apk/*
+RUN apk --update add openjdk8 && rm -rf /var/cache/apk/*
 
 RUN update-ca-certificates 
 
@@ -39,9 +25,6 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
   tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
   rm apache-maven-$MAVEN_VERSION-bin.tar.gz && \
   mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
-
-RUN addgroup altium 
-RUN adduser -s /bin/bash -D -G altium altium
 
 USER altium
 
