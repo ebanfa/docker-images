@@ -5,7 +5,8 @@ MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD:-"mysql"}
 MYSQL_USER=${MYSQL_USER:-"altium"}
 MYSQL_USER_PWD=${MYSQL_USER_PWD:-"netfilter"}
 MYSQL_USER_DB=${MYSQL_USER_DB:-"altium"}
-MYSQL_DDL_FILE=${MYSQL_DDL_FILE:-"/scripts"}
+MYSQL_DDL_FILE=${MYSQL_DDL_FILE:-"ddl.sql"}
+MYSQL_SEED_FILE=${MYSQL_DDL_FILE:-"seed-data.sql"}
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
@@ -69,9 +70,14 @@ EOF
 	rm -f $tfile
 
 	# run sql DDL file
-	echo "[i] running sql DDL "
-	wget https://raw.githubusercontent.com/ebanfa/docker-images/master/altium-mysql/database.sql
-	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < database.sql
+	echo "[i] Downloading SQL scripts "
+	wget https://raw.githubusercontent.com/ebanfa/docker-images/master/altium-mysql/$MYSQL_DDL_FILE
+	wget https://raw.githubusercontent.com/ebanfa/docker-images/master/altium-mysql/$MYSQL_SEED_FILE
+
+	# run sql DDL file
+	echo "[i] Running download SQL files"
+	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < $MYSQL_DDL_FILE
+	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < $MYSQL_SEED_FILE
 	#/usr/bin/mysql -u $MYSQL_USER -p$MYSQL_USER_PWD MYSQL_USER_DB < database.sql
 fi
 
